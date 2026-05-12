@@ -1,1106 +1,416 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>vCard - Personal Portfolio</title>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Muhammad Rehan Khalid — Laravel Developer</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#f0f4ff;--bg2:#ffffff;--bg3:#e8eeff;
+  --accent:#2563eb;--accent2:#1d4ed8;--accent3:#3b82f6;--accent-light:#dbeafe;
+  --text:#0f172a;--text2:#475569;--text3:#94a3b8;
+  --border:#e2e8f0;--card:#ffffff;
+  --green:#16a34a;--shadow:0 1px 3px rgba(0,0,0,.08),0 4px 12px rgba(37,99,235,.07);
+}
+html{scroll-behavior:smooth}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;overflow-x:hidden}
 
-  <!--
-    - favicon
-  -->
-  <link rel="shortcut icon" href="./assets/images/logo.ico" type="image/x-icon">
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 2rem}
+.nav-inner{max-width:1100px;margin:auto;display:flex;align-items:center;justify-content:space-between;height:60px}
+.nav-logo{font-size:1.1rem;font-weight:800;color:var(--accent);letter-spacing:.5px}
+.nav-logo span{color:var(--text)}
+.nav-links{display:flex;gap:2rem;list-style:none}
+.nav-links a{color:var(--text2);text-decoration:none;font-size:.85rem;letter-spacing:.4px;text-transform:uppercase;font-weight:500;transition:color .2s}
+.nav-links a:hover{color:var(--accent)}
 
-  <!--
-    - custom css link
-  -->
-  <link rel="stylesheet" href="./assets/css/style.css">
+/* HERO */
+.hero{min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:6rem 2rem 3rem;position:relative;overflow:hidden;background:linear-gradient(160deg,#eff6ff 0%,#f0f4ff 50%,#e8f5e9 100%)}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 50% -10%,rgba(37,99,235,.08),transparent)}
+.hero-content{position:relative;max-width:720px}
 
-  <!--
-    - google font link
-  -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+/* AVATAR */
+.avatar-wrap{margin:0 auto 1.75rem;width:150px;height:150px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent3));padding:3px;box-shadow:0 0 0 6px rgba(37,99,235,.1)}
+.avatar-inner{width:100%;height:100%;border-radius:50%;background:#dbeafe;display:flex;align-items:center;justify-content:center;font-size:2.8rem;font-weight:800;color:var(--accent);overflow:hidden;border:3px solid #fff}
+
+.hero-badge{display:inline-flex;align-items:center;gap:.5rem;background:#dcfce7;border:1px solid #bbf7d0;border-radius:50px;padding:.35rem 1rem;font-size:.8rem;color:var(--green);margin-bottom:1.25rem;letter-spacing:.4px;font-weight:600}
+.hero-badge i{font-size:.65rem}
+h1.hero-name{font-size:clamp(2.2rem,5.5vw,3.6rem);font-weight:900;letter-spacing:-1.5px;line-height:1.1;margin-bottom:.6rem}
+h1.hero-name span{color:var(--accent)}
+.hero-title{font-size:1.1rem;color:var(--accent);margin-bottom:1rem;font-weight:600;letter-spacing:.2px}
+.hero-desc{color:var(--text2);font-size:.975rem;max-width:540px;margin:0 auto 2rem;line-height:1.85}
+.hero-btns{display:flex;gap:.85rem;justify-content:center;flex-wrap:wrap}
+.btn-primary{background:var(--accent);color:#fff;padding:.7rem 1.6rem;border-radius:8px;text-decoration:none;font-weight:600;font-size:.875rem;transition:background .2s,transform .15s;display:inline-flex;align-items:center;gap:.5rem;box-shadow:0 4px 14px rgba(37,99,235,.3)}
+.btn-primary:hover{background:var(--accent2);transform:translateY(-2px)}
+.btn-outline{border:1.5px solid var(--border);color:var(--text2);padding:.7rem 1.6rem;border-radius:8px;text-decoration:none;font-size:.875rem;font-weight:500;transition:all .2s;display:inline-flex;align-items:center;gap:.5rem;background:#fff}
+.btn-outline:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-2px)}
+.btn-cv{background:var(--accent-light);color:var(--accent2);border:1.5px solid #bfdbfe;padding:.7rem 1.6rem;border-radius:8px;text-decoration:none;font-size:.875rem;font-weight:600;transition:all .2s;display:inline-flex;align-items:center;gap:.5rem}
+.btn-cv:hover{background:#bfdbfe;transform:translateY(-2px)}
+.hero-stats{display:flex;gap:2rem;justify-content:center;margin-top:3rem;flex-wrap:wrap}
+.stat{text-align:center;background:#fff;border:1px solid var(--border);border-radius:12px;padding:.85rem 1.5rem;box-shadow:var(--shadow)}
+.stat-num{font-size:1.75rem;font-weight:900;color:var(--accent)}
+.stat-label{font-size:.72rem;color:var(--text3);text-transform:uppercase;letter-spacing:.8px;margin-top:.1rem}
+
+/* SECTIONS */
+section{padding:5rem 2rem}
+.container{max-width:1100px;margin:auto}
+.section-tag{display:inline-block;font-size:.72rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--accent);margin-bottom:.5rem;font-weight:700;background:var(--accent-light);padding:.25rem .75rem;border-radius:50px}
+.section-title{font-size:clamp(1.6rem,3vw,2.1rem);font-weight:900;letter-spacing:-.5px;margin-bottom:.4rem}
+.section-sub{color:var(--text2);margin-bottom:3rem;max-width:500px;font-size:.95rem}
+
+/* SKILLS */
+#skills{background:var(--bg3)}
+.skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1.25rem}
+.skill-card{background:#fff;border:1px solid var(--border);border-radius:14px;padding:1.25rem 1.5rem;transition:border-color .2s,transform .2s,box-shadow .2s;box-shadow:var(--shadow)}
+.skill-card:hover{border-color:var(--accent3);transform:translateY(-3px);box-shadow:0 6px 20px rgba(37,99,235,.12)}
+.skill-card-icon{font-size:1.3rem;margin-bottom:.65rem;color:var(--accent)}
+.skill-card-title{font-size:.75rem;text-transform:uppercase;letter-spacing:1px;color:var(--text3);margin-bottom:.6rem;font-weight:700}
+.skill-tags{display:flex;flex-wrap:wrap;gap:.4rem}
+.tag{background:var(--accent-light);border:1px solid #bfdbfe;color:var(--accent2);padding:.2rem .65rem;border-radius:50px;font-size:.75rem;font-weight:500}
+
+/* EXPERIENCE */
+.exp-timeline{position:relative;padding-left:2rem}
+.exp-timeline::before{content:'';position:absolute;left:.4rem;top:.5rem;bottom:0;width:2px;background:linear-gradient(to bottom,var(--accent),var(--accent-light))}
+.exp-item{position:relative;margin-bottom:2.5rem}
+.exp-dot{position:absolute;left:-1.6rem;top:.55rem;width:12px;height:12px;border-radius:50%;background:var(--accent);border:2px solid var(--bg2);box-shadow:0 0 0 3px var(--accent-light)}
+.exp-header{display:flex;justify-content:space-between;flex-wrap:wrap;gap:.25rem;margin-bottom:.3rem;align-items:flex-start}
+.exp-company{font-size:1.05rem;font-weight:800;color:var(--text)}
+.exp-period{font-size:.78rem;color:var(--accent);background:var(--accent-light);padding:.2rem .75rem;border-radius:50px;white-space:nowrap;font-weight:600;border:1px solid #bfdbfe}
+.exp-role{font-size:.85rem;color:var(--accent);margin-bottom:.6rem;font-weight:600}
+.exp-list{list-style:none;color:var(--text2);font-size:.9rem}
+.exp-list li{padding:.2rem 0;padding-left:1.1rem;position:relative}
+.exp-list li::before{content:'→';position:absolute;left:0;color:var(--accent3);font-size:.75rem;top:.25rem}
+
+/* PROJECTS */
+#projects{background:var(--bg3)}
+.proj-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem}
+.proj-card{background:#fff;border:1px solid var(--border);border-radius:16px;padding:1.75rem;display:flex;flex-direction:column;gap:1rem;transition:border-color .2s,transform .2s,box-shadow .2s;box-shadow:var(--shadow)}
+.proj-card:hover{border-color:var(--accent3);transform:translateY(-4px);box-shadow:0 8px 24px rgba(37,99,235,.14)}
+.proj-icon{width:46px;height:46px;border-radius:12px;background:var(--accent-light);display:flex;align-items:center;justify-content:center;color:var(--accent);font-size:1.2rem;border:1px solid #bfdbfe}
+.proj-name{font-size:1rem;font-weight:800;color:var(--text)}
+.proj-desc{font-size:.875rem;color:var(--text2);line-height:1.75;flex:1}
+.proj-links{display:flex;flex-wrap:wrap;gap:.4rem}
+.proj-link{font-size:.72rem;color:var(--accent2);background:var(--accent-light);padding:.2rem .65rem;border-radius:50px;text-decoration:none;border:1px solid #bfdbfe;transition:background .2s;font-weight:500}
+.proj-link:hover{background:#bfdbfe}
+.proj-tech{display:flex;gap:.35rem;flex-wrap:wrap}
+.proj-tech span{font-size:.72rem;color:var(--text3);background:var(--bg3);padding:.15rem .55rem;border-radius:4px;border:1px solid var(--border)}
+
+/* EDUCATION */
+.edu-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.25rem}
+.edu-card{background:#fff;border:1px solid var(--border);border-radius:14px;padding:1.5rem;box-shadow:var(--shadow)}
+.edu-icon{width:40px;height:40px;border-radius:10px;background:var(--accent-light);display:flex;align-items:center;justify-content:center;color:var(--accent);font-size:1.1rem;margin-bottom:.85rem;border:1px solid #bfdbfe}
+.edu-degree{font-weight:800;font-size:1rem;margin-bottom:.25rem}
+.edu-inst{color:var(--text2);font-size:.875rem;margin-bottom:.4rem}
+.edu-meta{font-size:.8rem;color:var(--text3);font-weight:500}
+
+/* CONTACT */
+#contact{background:#fff}
+.contact-wrap{display:grid;grid-template-columns:1fr 1fr;gap:3.5rem;align-items:start}
+.contact-links{display:flex;flex-direction:column;gap:.75rem;margin-top:1.25rem}
+.contact-link{display:flex;align-items:center;gap:.85rem;color:var(--text2);text-decoration:none;font-size:.9rem;padding:.75rem 1rem;border:1px solid var(--border);border-radius:10px;transition:all .2s;background:#fff}
+.contact-link:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-light)}
+.contact-link i{color:var(--accent);width:18px;text-align:center}
+.contact-form{display:flex;flex-direction:column;gap:.9rem}
+.contact-form input,.contact-form textarea{background:var(--bg);border:1.5px solid var(--border);border-radius:10px;padding:.8rem 1rem;color:var(--text);font-size:.9rem;font-family:inherit;resize:vertical;outline:none;transition:border-color .2s}
+.contact-form input:focus,.contact-form textarea:focus{border-color:var(--accent);background:#fff}
+.contact-form textarea{min-height:130px}
+.contact-form button{background:var(--accent);color:#fff;border:none;padding:.85rem;border-radius:10px;font-weight:700;cursor:pointer;font-size:.9rem;transition:background .2s,transform .15s;box-shadow:0 4px 14px rgba(37,99,235,.25)}
+.contact-form button:hover{background:var(--accent2);transform:translateY(-1px)}
+.form-msg{font-size:.82rem;padding:.6rem .9rem;border-radius:8px;display:none;margin-top:.25rem}
+.form-msg.success{display:block;background:#dcfce7;color:#15803d;border:1px solid #bbf7d0}
+.form-msg.error{display:block;background:#fee2e2;color:#dc2626;border:1px solid #fecaca}
+
+footer{text-align:center;padding:2rem;color:var(--text3);font-size:.82rem;border-top:1px solid var(--border);background:#fff}
+
+@media(max-width:700px){
+  .nav-links{display:none}
+  .contact-wrap{grid-template-columns:1fr}
+  .hero-stats{gap:1rem}
+}
+</style>
 </head>
-
 <body>
 
-  <!--
-    - #MAIN
-  -->
-
-  <main>
-
-    <!--
-      - #SIDEBAR
-    -->
-
-    <aside class="sidebar" data-sidebar>
-
-      <div class="sidebar-info">
-
-        <figure class="avatar-box">
-          <img src="./assets/images/my-avatar.png" alt="Rehan Khalid" width="80">
-        </figure>
-
-        <div class="info-content">
-          <h1 class="name" title="Rehan Khalid">Rehan Khalid</h1>
-
-          <p class="title">Laravel developer</p>
-        </div>
-
-        <button class="info_more-btn" data-sidebar-btn>
-          <span>Show Contacts</span>
-
-          <ion-icon name="chevron-down"></ion-icon>
-        </button>
-
-      </div>
-
-      <div class="sidebar-info_more">
-
-        <div class="separator"></div>
-
-        <ul class="contacts-list">
-
-          <li class="contact-item">
-
-            <div class="icon-box">
-              <ion-icon name="mail-outline"></ion-icon>
-            </div>
-
-            <div class="contact-info">
-              <p class="contact-title">Email</p>
-
-              <a href="mailto:rehankhalid922@gmail.com" class="contact-link">rehankhalid922@gmail.com</a>
-            </div>
-
-          </li>
-
-          <li class="contact-item">
-
-            <div class="icon-box">
-              <ion-icon name="phone-portrait-outline"></ion-icon>
-            </div>
-
-            <div class="contact-info">
-              <p class="contact-title">Phone</p>
-
-              <a href="tel:03151152238" class="contact-link">0315 1152238</a>
-              <a href="tel:03076046865" class="contact-link">0307 6046865</a>
-            </div>
-
-          </li>
-
-          <li class="contact-item">
-
-            <div class="icon-box">
-              <ion-icon name="calendar-outline"></ion-icon>
-            </div>
-
-            <div class="contact-info">
-              <p class="contact-title">Birthday</p>
-
-              <time datetime="2000-06-10">June 10, 2000</time>
-            </div>
-
-          </li>
-
-          <li class="contact-item">
-
-            <div class="icon-box">
-              <ion-icon name="location-outline"></ion-icon>
-            </div>
-
-            <div class="contact-info">
-              <p class="contact-title">Location</p>
-
-              <address>Pakistan</address>
-            </div>
-
-          </li>
-
-        </ul>
-
-        <div class="separator"></div>
-
-        <ul class="social-list">
-
-          <li class="social-item">
-            <a href="#" class="social-link">
-              <ion-icon name="logo-facebook"></ion-icon>
-            </a>
-          </li>
-
-          <li class="social-item">
-            <a href="#" class="social-link">
-              <ion-icon name="logo-twitter"></ion-icon>
-            </a>
-          </li>
-
-          <li class="social-item">
-            <a href="#" class="social-link">
-              <ion-icon name="logo-instagram"></ion-icon>
-            </a>
-          </li>
-
-        </ul>
-
-      </div>
-
-    </aside>
-
-
-
-
-
-    <!--
-      - #main-content
-    -->
-
-    <div class="main-content">
-
-      <!--
-        - #NAVBAR
-      -->
-
-      <nav class="navbar">
-
-        <ul class="navbar-list">
-
-          <li class="navbar-item">
-            <button class="navbar-link  active" data-nav-link>About</button>
-          </li>
-
-          <li class="navbar-item">
-            <button class="navbar-link" data-nav-link>Resume</button>
-          </li>
-
-          <li class="navbar-item">
-            <button class="navbar-link" data-nav-link>Portfolio</button>
-          </li>
-
-          <li class="navbar-item">
-            <button class="navbar-link" data-nav-link>Blog</button>
-          </li>
-
-          <li class="navbar-item">
-            <button class="navbar-link" data-nav-link>Contact</button>
-          </li>
-
-        </ul>
-
-      </nav>
-
-
-
-
-
-      <!--
-        - #ABOUT
-      -->
-
-      <article class="about  active" data-page="about">
-
-        <header>
-          <h2 class="h2 article-title">About me</h2>
-        </header>
-
-        <section class="about-text">
-          <p>
-            I'm a Laravel Developer with over 3 years of hands-on experience building dynamic and scalable web applications. My skill set includes Laravel, MySQL, JavaScript, jQuery, HTML, Tailwind CSS, Bootstrap, and version control with Git/GitHub.
-          </p>
-
-          <p>
-            I specialize in Laravel framework, with strong expertise in MVC architecture, RESTful API development, and database design using MySQL. I have hands-on experience in developing dynamic web applications, implementing authentication systems, role-based access control (RBAC), and optimizing application performance.
-          </p>
-          <p>
-            My job is to building functional, user-centric systems that power modern web experiences. I specialize in creating scalable architectures that are easy to maintain and built to last.
-          </p>
-        </section>
-
-
-        <!--
-          - service
-        -->
-
-        <section class="service">
-
-          <h3 class="h3 service-title">What i'm doing</h3>
-
-          <ul class="service-list">
-
-            <li class="service-item">
-
-              <div class="service-icon-box">
-                <img src="./assets/images/icon-dev.svg" alt="Web development icon" width="40">
-              </div>
-
-              <div class="service-content-box">
-                <h4 class="h4 service-item-title">Web development</h4>
-
-                <p class="service-item-text">
-                  High-quality development of sites at the professional level.
-                </p>
-              </div>
-
-            </li>
-
-            <li class="service-item">
-
-              <div class="service-icon-box">
-                <img src="./assets/images/icon-app.svg" alt="mobile app icon" width="40">
-              </div>
-
-              <div class="service-content-box">
-                <h4 class="h4 service-item-title">Mobile apps API's</h4>
-
-                <p class="service-item-text">
-                  Professional development of applications for iOS and Android.
-                </p>
-              </div>
-
-            </li>
-
-          </ul>
-
-        </section>
-
-
-        <!--
-          - testimonials
-        -->
-
-        <!-- <section class="testimonials">
-
-          <h3 class="h3 testimonials-title">Testimonials</h3>
-
-          <ul class="testimonials-list has-scrollbar">
-
-            <li class="testimonials-item">
-              <div class="content-card" data-testimonials-item>
-
-                <figure class="testimonials-avatar-box">
-                  <img src="./assets/images/avatar-1.png" alt="Daniel lewis" width="60" data-testimonials-avatar>
-                </figure>
-
-                <h4 class="h4 testimonials-item-title" data-testimonials-title>Daniel lewis</h4>
-
-                <div class="testimonials-text" data-testimonials-text>
-                  <p>
-                    Richard was hired to create a corporate identity. We were very pleased with the work done. She has a
-                    lot of experience
-                    and is very concerned about the needs of client. Lorem ipsum dolor sit amet, ullamcous cididt
-                    consectetur adipiscing
-                    elit, seds do et eiusmod tempor incididunt ut laborels dolore magnarels alia.
-                  </p>
-                </div>
-
-              </div>
-            </li>
-
-            <li class="testimonials-item">
-              <div class="content-card" data-testimonials-item>
-
-                <figure class="testimonials-avatar-box">
-                  <img src="./assets/images/avatar-2.png" alt="Jessica miller" width="60" data-testimonials-avatar>
-                </figure>
-
-                <h4 class="h4 testimonials-item-title" data-testimonials-title>Jessica miller</h4>
-
-                <div class="testimonials-text" data-testimonials-text>
-                  <p>
-                    Richard was hired to create a corporate identity. We were very pleased with the work done. She has a
-                    lot of experience
-                    and is very concerned about the needs of client. Lorem ipsum dolor sit amet, ullamcous cididt
-                    consectetur adipiscing
-                    elit, seds do et eiusmod tempor incididunt ut laborels dolore magnarels alia.
-                  </p>
-                </div>
-
-              </div>
-            </li>
-
-            <li class="testimonials-item">
-              <div class="content-card" data-testimonials-item>
-
-                <figure class="testimonials-avatar-box">
-                  <img src="./assets/images/avatar-3.png" alt="Emily evans" width="60" data-testimonials-avatar>
-                </figure>
-
-                <h4 class="h4 testimonials-item-title" data-testimonials-title>Emily evans</h4>
-
-                <div class="testimonials-text" data-testimonials-text>
-                  <p>
-                    Richard was hired to create a corporate identity. We were very pleased with the work done. She has a
-                    lot of experience
-                    and is very concerned about the needs of client. Lorem ipsum dolor sit amet, ullamcous cididt
-                    consectetur adipiscing
-                    elit, seds do et eiusmod tempor incididunt ut laborels dolore magnarels alia.
-                  </p>
-                </div>
-
-              </div>
-            </li>
-
-            <li class="testimonials-item">
-              <div class="content-card" data-testimonials-item>
-
-                <figure class="testimonials-avatar-box">
-                  <img src="./assets/images/avatar-4.png" alt="Henry william" width="60" data-testimonials-avatar>
-                </figure>
-
-                <h4 class="h4 testimonials-item-title" data-testimonials-title>Henry william</h4>
-
-                <div class="testimonials-text" data-testimonials-text>
-                  <p>
-                    Richard was hired to create a corporate identity. We were very pleased with the work done. She has a
-                    lot of experience
-                    and is very concerned about the needs of client. Lorem ipsum dolor sit amet, ullamcous cididt
-                    consectetur adipiscing
-                    elit, seds do et eiusmod tempor incididunt ut laborels dolore magnarels alia.
-                  </p>
-                </div>
-
-              </div>
-            </li>
-
-          </ul>
-
-        </section> -->
-
-
-        <!--
-          - testimonials modal
-        -->
-
-        <div class="modal-container" data-modal-container>
-
-          <div class="overlay" data-overlay></div>
-
-          <section class="testimonials-modal">
-
-            <button class="modal-close-btn" data-modal-close-btn>
-              <ion-icon name="close-outline"></ion-icon>
-            </button>
-
-            <div class="modal-img-wrapper">
-              <figure class="modal-avatar-box">
-                <img src="./assets/images/avatar-1.png" alt="Daniel lewis" width="80" data-modal-img>
-              </figure>
-
-              <img src="./assets/images/icon-quote.svg" alt="quote icon">
-            </div>
-
-            <div class="modal-content">
-
-              <h4 class="h3 modal-title" data-modal-title>Daniel lewis</h4>
-
-              <time datetime="2021-06-14">14 June, 2021</time>
-
-              <div data-modal-text>
-                <p>
-                  Richard was hired to create a corporate identity. We were very pleased with the work done. She has a
-                  lot of experience
-                  and is very concerned about the needs of client. Lorem ipsum dolor sit amet, ullamcous cididt
-                  consectetur adipiscing
-                  elit, seds do et eiusmod tempor incididunt ut laborels dolore magnarels alia.
-                </p>
-              </div>
-
-            </div>
-
-          </section>
-
-        </div>
-
-
-        <!--
-          - clients
-        -->
-
-        <section class="clients">
-
-          <h3 class="h3 clients-title">Clients</h3>
-
-          <ul class="clients-list has-scrollbar">
-
-            <li class="clients-item">
-              <a href="#">
-                <img src="./assets/images/logo-1-color.png" alt="client logo">
-              </a>
-            </li>
-
-            <li class="clients-item">
-              <a href="#">
-                <img src="./assets/images/logo-2-color.png" alt="client logo">
-              </a>
-            </li>
-
-            <li class="clients-item">
-              <a href="#">
-                <img src="./assets/images/logo-3-color.png" alt="client logo">
-              </a>
-            </li>
-
-            <li class="clients-item">
-              <a href="#">
-                <img src="./assets/images/logo-4-color.png" alt="client logo">
-              </a>
-            </li>
-
-            <li class="clients-item">
-              <a href="#">
-                <img src="./assets/images/logo-5-color.png" alt="client logo">
-              </a>
-            </li>
-
-            <li class="clients-item">
-              <a href="#">
-                <img src="./assets/images/logo-6-color.png" alt="client logo">
-              </a>
-            </li>
-
-          </ul>
-
-        </section>
-
-      </article>
-
-
-
-
-
-      <!--
-        - #RESUME
-      -->
-
-      <article class="resume" data-page="resume">
-
-        <header>
-          <h2 class="h2 article-title">Resume</h2>
-        </header>        
-
-        <section class="timeline">
-
-          <div class="title-wrapper">
-            <div class="icon-box">
-              <ion-icon name="book-outline"></ion-icon>
-            </div>
-
-            <h3 class="h3">Experience</h3>
-          </div>
-
-          <ol class="timeline-list">
-
-            <li class="timeline-item">
-
-              <h4 class="h4 timeline-item-title">Laravel Developer</h4>
-
-              <span>Dzine Media (2023 — Present)</span>
-
-              <p class="timeline-text">
-                Working with team or individual as a Laravel Developer
-                Working on different paraphrasing laravel sites and build
-                a api for apps.
-              </p>
-
-            </li>
-
-            <li class="timeline-item">
-
-              <h4 class="h4 timeline-item-title">Laravel Developer</h4>
-
-              <span>DevsSpace Solutions (2022 — 2023)</span>
-
-              <p class="timeline-text">
-                Working with team as a Junior Developer
-Code is Organize day by day in GitLab with team
-              </p>
-
-            </li>
-
-            <li class="timeline-item">
-
-              <h4 class="h4 timeline-item-title">Laravel Internee</h4>
-
-              <span>Invictus Solutions (6 Months)</span>
-
-              <p class="timeline-text">
-                Working with team as a Junior Developer
-Code is Organize day by day in GitLab with team
-              </p>
-
-            </li>
-
-          </ol>
-
-        </section>
-
-        <section class="timeline">
-
-          <div class="title-wrapper">
-            <div class="icon-box">
-              <ion-icon name="book-outline"></ion-icon>
-            </div>
-
-            <h3 class="h3">Education</h3>
-          </div>
-
-          <ol class="timeline-list">
-
-            <li class="timeline-item">
-
-              <h4 class="h4 timeline-item-title">BS Computer Science (BSCS)</h4>
-              <h6 style="color: white;">Government College University, Faisalabad</h6>
-
-              <span>20017 — 2021</span>
-
-              <p class="timeline-text">
-                Focused on Software Development, Web Engineering, and Database Systems
-                Developed multiple academic and personal projects using PHP and Laravel
-                Gained strong understanding of OOP, MVC Architecture, and RESTful APIs
-                Hands-on experience with MySQL database design and optimization
-              </p>
-
-            </li>
-
-            <li class="timeline-item">
-
-              <h4 class="h4 timeline-item-title">I.C.S</h4>
-              <h6 style="color: white;">Science College Samanabad</h6>
-
-              <span>2015 — 2017</span>
-
-              <p class="timeline-text">
-                Built strong foundation in Mathematics, Physics, and Analytical Thinking
-                Developed problem-solving skills applicable to programming and logic building
-              </p>
-
-            </li>
-
-            <li class="timeline-item">
-
-              <h4 class="h4 timeline-item-title">Matric</h4>
-              <h6 style="color: white;">Dar-e-Arqam High School</h6>
-
-              <span>2015</span>
-
-              <p class="timeline-text">
-                Duis aute irure dolor in reprehenderit in voluptate, quila voluptas mag odit aut fugit, sed consequuntur
-                magni dolores
-                eos.
-              </p>
-
-            </li>
-
-          </ol>
-
-        </section>
-
-        <section class="skill">
-
-          <h3 class="h3 skills-title">My skills</h3>
-
-          <ul class="skills-list content-card">
-
-            <li class="skills-item">
-
-              <div class="title-wrapper">
-                <h5 class="h5">Web design</h5>
-                <data value="80">80%</data>
-              </div>
-
-              <div class="skill-progress-bg">
-                <div class="skill-progress-fill" style="width: 80%;"></div>
-              </div>
-
-            </li>
-
-            <li class="skills-item">
-
-              <div class="title-wrapper">
-                <h5 class="h5">Graphic design</h5>
-                <data value="70">70%</data>
-              </div>
-
-              <div class="skill-progress-bg">
-                <div class="skill-progress-fill" style="width: 70%;"></div>
-              </div>
-
-            </li>
-
-            <li class="skills-item">
-
-              <div class="title-wrapper">
-                <h5 class="h5">Branding</h5>
-                <data value="90">90%</data>
-              </div>
-
-              <div class="skill-progress-bg">
-                <div class="skill-progress-fill" style="width: 90%;"></div>
-              </div>
-
-            </li>
-
-            <li class="skills-item">
-
-              <div class="title-wrapper">
-                <h5 class="h5">WordPress</h5>
-                <data value="50">50%</data>
-              </div>
-
-              <div class="skill-progress-bg">
-                <div class="skill-progress-fill" style="width: 50%;"></div>
-              </div>
-
-            </li>
-
-          </ul>
-
-        </section>
-
-      </article>
-
-
-
-
-
-      <!--
-        - #PORTFOLIO
-      -->
-
-      <article class="portfolio" data-page="portfolio">
-
-        <header>
-          <h2 class="h2 article-title">Portfolio</h2>
-        </header>
-
-        <section class="projects">
-
-          <ul class="filter-list">
-
-            <li class="filter-item">
-              <button class="active" data-filter-btn>All</button>
-            </li>
-
-            <li class="filter-item">
-              <button data-filter-btn>Applications</button>
-            </li>
-
-            <li class="filter-item">
-              <button data-filter-btn>Web development</button>
-            </li>
-
-          </ul>
-
-          <div class="filter-select-box">
-
-            <button class="filter-select" data-select>
-
-              <div class="select-value" data-selecct-value>Select category</div>
-
-              <div class="select-icon">
-                <ion-icon name="chevron-down"></ion-icon>
-              </div>
-
-            </button>
-
-            <ul class="select-list">
-
-              <li class="select-item">
-                <button data-select-item>All</button>
-              </li>
-
-              <li class="select-item">
-                <button data-select-item>Applications</button>
-              </li>
-
-              <li class="select-item">
-                <button data-select-item>Web development</button>
-              </li>
-
-            </ul>
-
-          </div>
-
-          <ul class="project-list">
-
-            <li class="project-item  active" data-filter-item data-category="web development">
-              <a href="#">
-
-                <figure class="project-img">
-                  <div class="project-item-icon-box">
-                    <ion-icon name="eye-outline"></ion-icon>
-                  </div>
-
-                  <img src="./assets/images/project-1.jpg" alt="finance" loading="lazy">
-                </figure>
-
-                <h3 class="project-title">Finance</h3>
-
-                <p class="project-category">Web development</p>
-
-              </a>
-            </li>
-
-            <li class="project-item  active" data-filter-item data-category="web development">
-              <a href="#">
-
-                <figure class="project-img">
-                  <div class="project-item-icon-box">
-                    <ion-icon name="eye-outline"></ion-icon>
-                  </div>
-
-                  <img src="./assets/images/project-2.png" alt="orizon" loading="lazy">
-                </figure>
-
-                <h3 class="project-title">Orizon</h3>
-
-                <p class="project-category">Web development</p>
-
-              </a>
-            </li>
-
-            <li class="project-item  active" data-filter-item data-category="applications">
-              <a href="#">
-
-                <figure class="project-img">
-                  <div class="project-item-icon-box">
-                    <ion-icon name="eye-outline"></ion-icon>
-                  </div>
-
-                  <img src="./assets/images/project-4.png" alt="brawlhalla" loading="lazy">
-                </figure>
-
-                <h3 class="project-title">Brawlhalla</h3>
-
-                <p class="project-category">Applications</p>
-
-              </a>
-            </li>
-
-            <li class="project-item  active" data-filter-item data-category="web development">
-              <a href="#">
-
-                <figure class="project-img">
-                  <div class="project-item-icon-box">
-                    <ion-icon name="eye-outline"></ion-icon>
-                  </div>
-
-                  <img src="./assets/images/project-7.png" alt="summary" loading="lazy">
-                </figure>
-
-                <h3 class="project-title">Summary</h3>
-
-                <p class="project-category">Web development</p>
-
-              </a>
-            </li>
-
-            <li class="project-item  active" data-filter-item data-category="applications">
-              <a href="#">
-
-                <figure class="project-img">
-                  <div class="project-item-icon-box">
-                    <ion-icon name="eye-outline"></ion-icon>
-                  </div>
-
-                  <img src="./assets/images/project-8.jpg" alt="task manager" loading="lazy">
-                </figure>
-
-                <h3 class="project-title">Task Manager</h3>
-
-                <p class="project-category">Applications</p>
-
-              </a>
-            </li>
-
-            <li class="project-item  active" data-filter-item data-category="web development">
-              <a href="#">
-
-                <figure class="project-img">
-                  <div class="project-item-icon-box">
-                    <ion-icon name="eye-outline"></ion-icon>
-                  </div>
-
-                  <img src="./assets/images/project-9.png" alt="arrival" loading="lazy">
-                </figure>
-
-                <h3 class="project-title">Arrival</h3>
-
-                <p class="project-category">Web development</p>
-
-              </a>
-            </li>
-
-          </ul>
-
-        </section>
-
-      </article>
-
-
-
-
-
-      <!--
-        - #BLOG
-      -->
-
-      <article class="blog" data-page="blog">
-
-        <header>
-          <h2 class="h2 article-title">Blog</h2>
-        </header>
-
-        <section class="blog-posts">
-
-          <ul class="blog-posts-list">
-
-            <li class="blog-post-item">
-              <a href="#">
-
-                <figure class="blog-banner-box">
-                  <img src="./assets/images/blog-1.jpg" alt="Design conferences in 2022" loading="lazy">
-                </figure>
-
-                <div class="blog-content">
-
-                  <div class="blog-meta">
-                    <p class="blog-category">Design</p>
-
-                    <span class="dot"></span>
-
-                    <time datetime="2022-02-23">Fab 23, 2022</time>
-                  </div>
-
-                  <h3 class="h3 blog-item-title">Design conferences in 2022</h3>
-
-                  <p class="blog-text">
-                    Veritatis et quasi architecto beatae vitae dicta sunt, explicabo.
-                  </p>
-
-                </div>
-
-              </a>
-            </li>
-
-            <li class="blog-post-item">
-              <a href="#">
-
-                <figure class="blog-banner-box">
-                  <img src="./assets/images/blog-2.jpg" alt="Best fonts every designer" loading="lazy">
-                </figure>
-
-                <div class="blog-content">
-
-                  <div class="blog-meta">
-                    <p class="blog-category">Design</p>
-
-                    <span class="dot"></span>
-
-                    <time datetime="2022-02-23">Fab 23, 2022</time>
-                  </div>
-
-                  <h3 class="h3 blog-item-title">Best fonts every designer</h3>
-
-                  <p class="blog-text">
-                    Sed ut perspiciatis, nam libero tempore, cum soluta nobis est eligendi.
-                  </p>
-
-                </div>
-
-              </a>
-            </li>
-
-            <li class="blog-post-item">
-              <a href="#">
-
-                <figure class="blog-banner-box">
-                  <img src="./assets/images/blog-3.jpg" alt="Design digest #80" loading="lazy">
-                </figure>
-
-                <div class="blog-content">
-
-                  <div class="blog-meta">
-                    <p class="blog-category">Design</p>
-
-                    <span class="dot"></span>
-
-                    <time datetime="2022-02-23">Fab 23, 2022</time>
-                  </div>
-
-                  <h3 class="h3 blog-item-title">Design digest #80</h3>
-
-                  <p class="blog-text">
-                    Excepteur sint occaecat cupidatat no proident, quis nostrum exercitationem ullam corporis suscipit.
-                  </p>
-
-                </div>
-
-              </a>
-            </li>
-
-            <li class="blog-post-item">
-              <a href="#">
-
-                <figure class="blog-banner-box">
-                  <img src="./assets/images/blog-4.jpg" alt="UI interactions of the week" loading="lazy">
-                </figure>
-
-                <div class="blog-content">
-
-                  <div class="blog-meta">
-                    <p class="blog-category">Design</p>
-
-                    <span class="dot"></span>
-
-                    <time datetime="2022-02-23">Fab 23, 2022</time>
-                  </div>
-
-                  <h3 class="h3 blog-item-title">UI interactions of the week</h3>
-
-                  <p class="blog-text">
-                    Enim ad minim veniam, consectetur adipiscing elit, quis nostrud exercitation ullamco laboris nisi.
-                  </p>
-
-                </div>
-
-              </a>
-            </li>
-
-            <li class="blog-post-item">
-              <a href="#">
-
-                <figure class="blog-banner-box">
-                  <img src="./assets/images/blog-5.jpg" alt="The forgotten art of spacing" loading="lazy">
-                </figure>
-
-                <div class="blog-content">
-
-                  <div class="blog-meta">
-                    <p class="blog-category">Design</p>
-
-                    <span class="dot"></span>
-
-                    <time datetime="2022-02-23">Fab 23, 2022</time>
-                  </div>
-
-                  <h3 class="h3 blog-item-title">The forgotten art of spacing</h3>
-
-                  <p class="blog-text">
-                    Maxime placeat, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                  </p>
-
-                </div>
-
-              </a>
-            </li>
-
-            <li class="blog-post-item">
-              <a href="#">
-
-                <figure class="blog-banner-box">
-                  <img src="./assets/images/blog-6.jpg" alt="Design digest #79" loading="lazy">
-                </figure>
-
-                <div class="blog-content">
-
-                  <div class="blog-meta">
-                    <p class="blog-category">Design</p>
-
-                    <span class="dot"></span>
-
-                    <time datetime="2022-02-23">Fab 23, 2022</time>
-                  </div>
-
-                  <h3 class="h3 blog-item-title">Design digest #79</h3>
-
-                  <p class="blog-text">
-                    Optio cumque nihil impedit uo minus quod maxime placeat, velit esse cillum.
-                  </p>
-
-                </div>
-
-              </a>
-            </li>
-
-          </ul>
-
-        </section>
-
-      </article>
-
-
-
-
-
-      <!--
-        - #CONTACT
-      -->
-
-      <article class="contact" data-page="contact">
-
-        <header>
-          <h2 class="h2 article-title">Contact</h2>
-        </header>
-
-        <section class="mapbox" data-mapbox>
-          <figure>
-            <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d199666.5651251294!2d-121.58334177520186!3d38.56165006739519!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x809ac672b28397f9%3A0x921f6aaa74197fdb!2sSacramento%2C%20CA%2C%20USA!5e0!3m2!1sen!2sbd!4v1647608789441!5m2!1sen!2sbd"
-              width="400" height="300" loading="lazy"></iframe>
-          </figure>
-        </section>
-
-        <section class="contact-form">
-
-          <h3 class="h3 form-title">Contact Form</h3>
-
-          <form action="#" class="form" data-form>
-
-            <div class="input-wrapper">
-              <input type="text" name="fullname" class="form-input" placeholder="Full name" required data-form-input>
-
-              <input type="email" name="email" class="form-input" placeholder="Email address" required data-form-input>
-            </div>
-
-            <textarea name="message" class="form-input" placeholder="Your Message" required data-form-input></textarea>
-
-            <button class="form-btn" type="submit" disabled data-form-btn>
-              <ion-icon name="paper-plane"></ion-icon>
-              <span>Send Message</span>
-            </button>
-
-          </form>
-
-        </section>
-
-      </article>
-
+<nav>
+  <div class="nav-inner">
+    <div class="nav-logo"><span>Rehan</span> Laravel Developer</div>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="about">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="avatar-wrap">
+      <img src="assets/cv/dp.png" style="width:100%;height:100%;object-fit:fill;border-radius:50%"/>
     </div>
+    <div class="hero-badge"><i class="fa fa-circle"></i> Available for opportunities</div>
+    <h1 class="hero-name">Muhammad <span>Rehan Khalid</span></h1>
+    <div class="hero-title">Laravel Developer · Backend Engineer</div>
+    <p class="hero-desc">Results-driven backend developer with 3+ years of experience building scalable web applications and RESTful APIs. Specializing in PHP, Laravel, MySQL, and AI-powered platforms.</p>
+    <div class="hero-btns">
+      <a href="#projects" class="btn-primary"><i class="fa fa-code"></i> View Projects</a>
+      <a href="#contact" class="btn-outline"><i class="fa fa-envelope"></i> Hire Me</a>
+      <a href="assets/cv/Muhammad-Rehan-Khalid-CV.pdf" class="btn-cv" id="cvBtn" download="Muhammad-Rehan-Khalid-CV.pdf"><i class="fa fa-download"></i> Download CV</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><div class="stat-num">3+</div><div class="stat-label">Years Exp.</div></div>
+      <div class="stat"><div class="stat-num">10+</div><div class="stat-label">Projects</div></div>
+      <div class="stat"><div class="stat-num">3</div><div class="stat-label">Companies</div></div>
+      <div class="stat"><div class="stat-num">3.31</div><div class="stat-label">CGPA</div></div>
+    </div>
+  </div>
+</section>
 
-  </main>
+<!-- SKILLS -->
+<section id="skills">
+  <div class="container">
+    <div class="section-tag">What I work with</div>
+    <h2 class="section-title">Skills & Technologies</h2>
+    <p class="section-sub">A full-stack toolkit centered around Laravel and modern backend development.</p>
+    <div class="skills-grid">
+      <div class="skill-card">
+        <div class="skill-card-icon"><i class="fa fa-code"></i></div>
+        <div class="skill-card-title">Languages</div>
+        <div class="skill-tags"><span class="tag">PHP</span><span class="tag">JavaScript</span><span class="tag">C/C++</span><span class="tag">HTML</span><span class="tag">CSS</span></div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-card-icon"><i class="fa fa-layer-group"></i></div>
+        <div class="skill-card-title">Frameworks & Frontend</div>
+        <div class="skill-tags"><span class="tag">Laravel</span><span class="tag">Bootstrap</span><span class="tag">jQuery</span></div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-card-icon"><i class="fa fa-database"></i></div>
+        <div class="skill-card-title">Database</div>
+        <div class="skill-tags"><span class="tag">MySQL</span><span class="tag">Eloquent ORM</span></div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-card-icon"><i class="fa fa-tools"></i></div>
+        <div class="skill-card-title">Tools & Platforms</div>
+        <div class="skill-tags"><span class="tag">Git</span><span class="tag">GitLab</span><span class="tag">Postman</span><span class="tag">VS Code</span><span class="tag">Jira</span><span class="tag">Cloudways</span></div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-card-icon"><i class="fa fa-network-wired"></i></div>
+        <div class="skill-card-title">Concepts</div>
+        <div class="skill-tags"><span class="tag">RESTful APIs</span><span class="tag">MVC</span><span class="tag">OOP</span></div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-card-icon"><i class="fa fa-robot"></i></div>
+        <div class="skill-card-title">Specialties</div>
+        <div class="skill-tags"><span class="tag">AI Integrations</span><span class="tag">API Design</span><span class="tag">CMS</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="container">
+    <div class="section-tag">Career path</div>
+    <h2 class="section-title">Work Experience</h2>
+    <p class="section-sub">From internee to lead developer — a growing track record of delivering production-grade solutions.</p>
+    <div class="exp-timeline">
+      <div class="exp-item">
+        <div class="exp-dot"></div>
+        <div class="exp-header">
+          <div class="exp-company">Dzine Media</div>
+          <div class="exp-period">Jul 2023 – Present</div>
+        </div>
+        <div class="exp-role">Laravel Developer</div>
+        <ul class="exp-list">
+          <li>Developed and maintained Laravel and AI-based web applications</li>
+          <li>Built and integrated RESTful APIs for mobile and web applications</li>
+          <li>Worked on AI paraphrasing platforms and content tools</li>
+          <li>Collaborated with cross-functional teams to deliver scalable solutions</li>
+        </ul>
+      </div>
+      <div class="exp-item">
+        <div class="exp-dot"></div>
+        <div class="exp-header">
+          <div class="exp-company">DevsSpace Solutions</div>
+          <div class="exp-period">2022 – 2023</div>
+        </div>
+        <div class="exp-role">Junior Laravel Developer</div>
+        <ul class="exp-list">
+          <li>Assisted in developing web applications using Laravel</li>
+          <li>Collaborated with cross-functional teams for feature development</li>
+        </ul>
+      </div>
+      <div class="exp-item">
+        <div class="exp-dot"></div>
+        <div class="exp-header">
+          <div class="exp-company">Invictus Solutions</div>
+          <div class="exp-period">Internship</div>
+        </div>
+        <div class="exp-role">Laravel Internee</div>
+        <ul class="exp-list">
+          <li>Learned and applied Laravel fundamentals in real projects</li>
+          <li>Collaborated with team members on development tasks</li>
+          <li>Used GitLab for daily code management</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="container">
+    <div class="section-tag">What I've built</div>
+    <h2 class="section-title">Featured Projects</h2>
+    <p class="section-sub">Production-level applications spanning AI tools, mobile APIs, and e-commerce platforms.</p>
+    <div class="proj-grid">
+      <div class="proj-card">
+        <div class="proj-icon"><i class="fa fa-brain"></i></div>
+        <div class="proj-name">AI Paraphrasing Tools</div>
+        <div class="proj-desc">Developed and maintained multiple AI-based paraphrasing platforms. Improved content processing pipelines and API integrations at scale.</div>
+        <div class="proj-tech"><span>Laravel</span><span>PHP</span><span>AI APIs</span><span>MySQL</span></div>
+        <div class="proj-links">
+          <a href="https://www.humanizeai.net/" target="_blank" class="proj-link">humanizeai.net</a>
+          <a href="https://paraphrasetool.ai/" target="_blank" class="proj-link">paraphrasetool.ai</a>
+          <a href="https://essaywriter.co/" target="_blank" class="proj-link">essaywriter.co</a>
+          <a href="https://www.plagiarismremover.co/" target="_blank" class="proj-link">plagiarismremover.co</a>
+        </div>
+      </div>
+      <div class="proj-card">
+        <div class="proj-icon"><i class="fa fa-mobile-alt"></i></div>
+        <div class="proj-name">Invoice Maker App API</div>
+        <div class="proj-desc">Designed and developed backend APIs for a mobile invoice application. Managed data handling, authentication, and performance optimization.</div>
+        <div class="proj-tech"><span>Laravel</span><span>REST API</span><span>MySQL</span><span>Auth</span></div>
+        <div class="proj-links">
+          <a href="https://play.google.com/store/apps/details?id=com.dzinemedia.invoicemaker" target="_blank" class="proj-link">Play Store</a>
+        </div>
+      </div>
+      <div class="proj-card">
+        <div class="proj-icon"><i class="fa fa-graduation-cap"></i></div>
+        <div class="proj-name">PrimaryLeap</div>
+        <div class="proj-desc">Worked as backend API developer in a team environment for a UK-based educational platform. Contributed to feature development and ongoing maintenance.</div>
+        <div class="proj-tech"><span>Laravel</span><span>REST API</span><span>Team Project</span></div>
+        <div class="proj-links">
+          <a href="https://primaryleap.co.uk/" target="_blank" class="proj-link">primaryleap.co.uk</a>
+        </div>
+      </div>
+      <div class="proj-card">
+        <div class="proj-icon"><i class="fa fa-utensils"></i></div>
+        <div class="proj-name">Family Food Website</div>
+        <div class="proj-desc">Built a dynamic CMS-based website with a custom admin panel. Implemented full CRUD operations for product categories and listings.</div>
+        <div class="proj-tech"><span>Laravel</span><span>CMS</span><span>Bootstrap</span><span>MySQL</span></div>
+        <div class="proj-links">
+          <a href="https://www.familyfoodproducts.com.pk/" target="_blank" class="proj-link">familyfoodproducts.com.pk</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="container">
+    <div class="section-tag">Academic background</div>
+    <h2 class="section-title">Education & Certifications</h2>
+    <p class="section-sub">A solid computer science foundation backed by professional development.</p>
+    <div class="edu-grid">
+      <div class="edu-card">
+        <div class="edu-icon"><i class="fa fa-university"></i></div>
+        <div class="edu-degree">BS Computer Science</div>
+        <div class="edu-inst">Government College University, Faisalabad</div>
+        <div class="edu-meta">2017 – 2021 &nbsp;·&nbsp; CGPA: 3.31</div>
+      </div>
+      <div class="edu-card">
+        <div class="edu-icon"><i class="fa fa-school"></i></div>
+        <div class="edu-degree">Intermediate (ICS)</div>
+        <div class="edu-inst">Science College Samanabad</div>
+        <div class="edu-meta">2015 – 2017</div>
+      </div>
+      <div class="edu-card">
+        <div class="edu-icon"><i class="fa fa-certificate"></i></div>
+        <div class="edu-degree">Web Development</div>
+        <div class="edu-inst">NAVTTC Certification</div>
+        <div class="edu-meta">2022</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <div class="section-tag">Get in touch</div>
+    <h2 class="section-title">Let's Work Together</h2>
+    <p class="section-sub">Have a project in mind? I'd love to hear about it.</p>
+    <div class="contact-wrap">
+      <div>
+        <p style="color:var(--text2);font-size:.95rem;line-height:1.85;margin-bottom:1rem">
+          I'm currently open to freelance projects and full-time opportunities. Whether you need a scalable API, a Laravel web application, or AI tool integration — let's build something great together.
+        </p>
+        <div class="contact-links">
+          <a href="mailto:rehankhalid922@gmail.com" class="contact-link"><i class="fa fa-envelope"></i> rehankhalid922@gmail.com</a>
+          <a href="tel:+923151152238" class="contact-link"><i class="fa fa-phone"></i> +92 315 1152238</a>
+          <a href="tel:+923076046865" class="contact-link"><i class="fa fa-phone"></i> +92 307 6046865</a>
+          <a href="https://linkedin.com/in/rehankhalid922" target="_blank" class="contact-link"><i class="fab fa-linkedin"></i> linkedin.com/in/rehankhalid922</a>
+        </div>
+      </div>
+      <div>
+        <!-- Replace YOUR_FORM_ID below with your actual Formspree form ID -->
+        <form class="contact-form" id="contactForm" action="https://formspree.io/f/xdabbdwk" method="POST">
+          <input type="text" name="name" placeholder="Your Name" required/>
+          <input type="email" name="email" placeholder="Your Email" required/>
+          <input type="text" name="subject" placeholder="Subject"/>
+          <textarea name="message" placeholder="Tell me about your project..." required></textarea>
+          <button type="submit" id="submitBtn"><i class="fa fa-paper-plane"></i> &nbsp;Send Message</button>
+          <div class="form-msg" id="formMsg"></div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>Designed & Built by <strong style="color:var(--accent)">Muhammad Rehan Khalid</strong> &nbsp;·&nbsp; Laravel Developer &nbsp;·&nbsp; Pakistan</p>
+</footer>
+
+<script>
+const form = document.getElementById('contactForm');
+const msg = document.getElementById('formMsg');
+const btn = document.getElementById('submitBtn');
+
+form.addEventListener('submit', async e => {
+  e.preventDefault();
+  btn.disabled = true;
+  btn.innerHTML = '<i class="fa fa-spinner fa-spin"></i> &nbsp;Sending...';
+  msg.className = 'form-msg';
+
+  try {
+    const res = await fetch(form.action, {
+      method: 'POST',
+      body: new FormData(form),
+      headers: { Accept: 'application/json' }
+    });
+    if (res.ok) {
+      msg.textContent = '✓ Message sent! I\'ll get back to you soon.';
+      msg.className = 'form-msg success';
+      form.reset();
+    } else {
+      throw new Error();
+    }
+  } catch {
+    msg.textContent = '✗ Something went wrong. Please email me directly.';
+    msg.className = 'form-msg error';
+  }
+  btn.disabled = false;
+  btn.innerHTML = '<i class="fa fa-paper-plane"></i> &nbsp;Send Message';
+});
 
 
-
-
-
-
-  <!--
-    - custom js link
-  -->
-  <script src="./assets/js/script.js"></script>
-
-  <!--
-    - ionicon link
-  -->
-  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-
+</script>
 </body>
-
 </html>
